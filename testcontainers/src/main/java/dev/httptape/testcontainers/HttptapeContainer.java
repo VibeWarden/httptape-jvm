@@ -1,5 +1,6 @@
 package dev.httptape.testcontainers;
 
+import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.MountableFile;
@@ -8,13 +9,10 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -86,7 +84,8 @@ public class HttptapeContainer extends GenericContainer<HttptapeContainer> {
      * @return this container for chaining
      */
     public HttptapeContainer withFixturesPath(Path hostPath) {
-        withFileSystemBind(hostPath.toAbsolutePath().toString(), CONTAINER_FIXTURES_PATH);
+        withFileSystemBind(hostPath.toAbsolutePath().toString(), CONTAINER_FIXTURES_PATH,
+                BindMode.READ_ONLY);
         return self();
     }
 

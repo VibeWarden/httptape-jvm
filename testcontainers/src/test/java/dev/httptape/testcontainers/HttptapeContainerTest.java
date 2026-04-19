@@ -57,6 +57,20 @@ class HttptapeContainerTest {
         }
 
         @Test
+        void acceleratedRecord_zeroFactor_throws() {
+            var ex = assertThrows(IllegalArgumentException.class,
+                    () -> new SseTimingMode.Accelerated(0));
+            assertTrue(ex.getMessage().contains("positive"));
+        }
+
+        @Test
+        void acceleratedRecord_negativeFactor_throws() {
+            var ex = assertThrows(IllegalArgumentException.class,
+                    () -> new SseTimingMode.Accelerated(-2.0));
+            assertTrue(ex.getMessage().contains("positive"));
+        }
+
+        @Test
         void sseTimingMode_sealedInterface_permits() {
             // Verify all three implementations are valid
             assertInstanceOf(SseTimingMode.class, SseTimingMode.REALTIME);

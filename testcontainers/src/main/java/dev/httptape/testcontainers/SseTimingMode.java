@@ -67,6 +67,13 @@ public sealed interface SseTimingMode permits
      * @param factor the acceleration multiplier (must be positive)
      */
     record Accelerated(double factor) implements SseTimingMode {
+        public Accelerated {
+            if (factor <= 0) {
+                throw new IllegalArgumentException(
+                        "Acceleration factor must be positive, got: " + factor);
+            }
+        }
+
         @Override
         public String toCliFlag() {
             return "accelerated=" + factor;
